@@ -1,0 +1,40 @@
+@model List<SanThuongMaiDienTu.Models.CartItem>
+@{
+    ViewData[index: "Title"] = "Xác nhận đơn hàng";
+}
+
+<div class="container py-5">
+    <h2 class="fw-bold mb-4 text-primary">THÔNG TIN ĐẶT HÀNG</h2>
+    <div class="row">
+        <div class="col-md-7">
+            <form asp-action="ProcessOrder" method="post" class="card p-4 shadow-sm border-0">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Địa chỉ giao hàng</label>
+                    <textarea name="address" class="form-control" rows="3" required placeholder="Số nhà, tên đường, phường/xã..."></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Số điện thoại</label>
+                    <input type="tel" name="phone" class="form-control" required placeholder="090xxxxxxx">
+                </div>
+                <button type="submit" class="btn btn-success btn-lg w-100 fw-bold rounded-pill">XÁC NHẬN THANH TOÁN</button>
+            </form>
+        </div>
+        <div class="col-md-5">
+            <div class="card p-3 bg-light border-0">
+                <h5 class="fw-bold">Tóm tắt đơn hàng</h5>
+                <hr>
+                @foreach (CartItem item in Model) {
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>@item.ProductName x @item.Quantity</span>
+                        <span>@((item.Price * item.Quantity).ToString(format: "#,##0")) ₫</span>
+                    </div>
+                }
+                <hr>
+                <div class="d-flex justify-content-between fw-bold text-danger fs-5">
+                    <span>TỔNG CỘNG:</span>
+                    <span>@Model.Sum(x => x.Price * x.Quantity).ToString(format: "#,##0") ₫</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

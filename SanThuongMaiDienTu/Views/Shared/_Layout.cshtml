@@ -1,0 +1,127 @@
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData[index: "Title"] - BM DIGITAL</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SanThuongMaiDienTu.styles.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm py-3">
+            <div class="container">
+                <a class="navbar-brand text-primary fw-bold fs-3" asp-controller="Home" asp-action="Index">
+                    <span class="text-warning">BM</span> DIGITAL
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-semibold" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        </li>
+
+                        @* --- LOGIC PHÂN QUYỀN ADMIN Ở ĐÂY --- *@
+                        @if (Context.Session.GetString(key: "IsAdmin") == "True")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-primary fw-bold" asp-controller="Product" asp-action="Index">
+                                    <i class="bi bi-box-seam"></i> Quản lý kho
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-success fw-bold" asp-controller="Product" asp-action="Create">
+                                    <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger fw-bold" asp-controller="Admin" asp-action="Index">
+                                    <i class="bi bi-person-badge"></i> Đơn hàng
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-muted" asp-controller="Admin" asp-action="Logout">Thoát</a>
+                            </li>
+                        }
+                        else
+                        {
+                            @* Nếu chưa đăng nhập chỉ hiện nút Quản trị chung *@
+                            <li class="nav-item">
+                                <a class="nav-link text-danger fw-bold" asp-controller="Admin" asp-action="Index">
+                                    <i class="bi bi-shield-lock"></i> Quản trị
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="d-flex align-items-center">
+                        <form class="me-3 d-flex" asp-controller="Home" asp-action="Index" method="get">
+                            <div class="input-group">
+                                <input class="form-control form-control-sm rounded-start-pill ps-3" 
+                                       type="search" name="query" placeholder="Tìm sản phẩm...">
+                                <button class="btn btn-sm btn-primary rounded-end-pill px-3" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <a class="nav-link text-dark position-relative me-4" asp-controller="Carts" asp-action="Index">
+                            <i class="bi bi-cart3 fs-4"></i>
+                            @await Component.InvokeAsync(name: "CartBadge")
+                        </a>
+
+                        @if (Context.Session.GetString(key: "IsAdmin") != "True")
+                        {
+                            <div class="navbar-nav gap-2">
+                                <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-controller="Account" asp-action="Login">Đăng nhập</a>
+                                <a class="btn btn-primary btn-sm rounded-pill px-3" asp-controller="Account" asp-action="Register">Đăng ký</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        @* Các thông báo TempData giữ nguyên *@
+        @if (TempData[key: "SearchError"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show border-0 shadow-sm" role="alert">
+                <i class="bi bi-exclamation-circle-fill me-2"></i> @TempData[key: "SearchError"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (TempData[key: "Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i> @TempData[key: "Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-auto py-3 bg-light">
+        <div class="container text-center">
+            &copy; 2026 - <span class="fw-bold text-primary">BM DIGITAL</span> - Hệ thống Siêu thị Công nghệ
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync(name: "Scripts", required: false)
+</body>
+</html>

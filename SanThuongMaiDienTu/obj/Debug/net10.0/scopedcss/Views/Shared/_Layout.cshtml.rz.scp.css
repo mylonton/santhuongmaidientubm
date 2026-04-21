@@ -1,0 +1,37 @@
+/* Xóa bỏ position absolute để tránh lỗi đè nội dung */
+.footer[b-kifeaqwj23] {
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Tinh chỉnh thẻ a để không bị vỡ chữ */
+a.navbar-brand[b-kifeaqwj23] {
+  white-space: normal;
+  text-align: left;
+  word-break: normal;
+}
+
+/* Màu sắc chủ đạo đồng nhất với nút bấm Amazon */
+a[b-kifeaqwj23] {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+a:hover[b-kifeaqwj23] {
+  color: #003d80;
+  text-decoration: underline;
+}
+
+/* Đảm bảo menu không bị dính sát vào nhau */
+.nav-link[b-kifeaqwj23] {
+    padding: 0.5rem 1rem !important;
+}
+
+/* Hiệu ứng badge giỏ hàng */
+.badge[b-kifeaqwj23] {
+    font-size: 0.7rem;
+    padding: 0.35em 0.65em;
+}

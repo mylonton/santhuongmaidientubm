@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData[index: "Title"] - BM Digital</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        .navbar-brand { font-size: 1.6rem; font-weight: bold; }
+        .nav-link { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
+        .footer-dark { background-color: #1a1a1a; color: #f0f0f0; }
+        .search-box { border-radius: 20px 0 0 20px !important; }
+        .search-btn { border-radius: 0 20px 20px 0 !important; }
+        .nav-item .bi { font-size: 1.1rem; vertical-align: middle; }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand text-primary" asp-controller="Home" asp-action="Index">
+                <span class="text-warning">BM</span> DIGITAL
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1 ms-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">
+                            <i class="bi bi-house-door me-1"></i> Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">
+                            <i class="bi bi-box-seam me-1"></i> Sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">
+                            <i class="bi bi-shield-check me-1"></i> Bảo mật
+                        </a>
+                    </li>
+                </ul>
+
+                <form class="d-flex mx-auto w-25" asp-controller="Home" asp-action="Search" method="get">
+                    <input class="form-control search-box" type="search" name="query" placeholder="Tìm sản phẩm...">
+                    <button class="btn btn-primary search-btn" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-warning text-dark px-4 rounded-pill shadow-sm ms-lg-3" 
+                           asp-controller="Carts" asp-action="Index">
+                            <i class="bi bi-cart3 me-1"></i> GIỎ HÀNG
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container mt-4">
+    <main role="main" class="pb-5">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="footer-dark py-5 mt-auto">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="text-warning fw-bold">SIÊU THỊ CÔNG NGHỆ BM</h5>
+                <p class="small text-secondary">Uy tín tạo nên thương hiệu - Phục vụ tận tâm</p>
+                <p class="fs-5 mb-0">
+                    Hotline: <a href="tel:19009090" class="text-warning fw-bold text-decoration-none">1900 9090</a>
+                </p>
+                <hr class="my-4 border-secondary w-25 mx-auto">
+                <div class="small text-secondary">&copy; 2026 - BM Digital - Đã đăng ký bản quyền</div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
